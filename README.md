@@ -5,8 +5,9 @@ We first utilized the Twitter API to gather tweets from the live stream across N
 
 ## Textual Sentiment Analysis
 We used an open source python package Natural Language ToolKit (NLTK) for sentiment analysis of the tweets. The NLTK package is commonly used for text analytics and is specifically capable of analyzing people’s sentiments from text sequences in a computationally affordable manner. We chose the NLTK over other more intricate Natural Language Processing (NLP) Libraries for simplicity. The Sentiment Intensity Analyzer function from NLTK assigns a polarity score to each tweet, ranging from -1 to 1, allocating a score of 1 if the tweet has the most positive sentiment and -1 if the tweet has the most negative sentiment. Finally, we aggregated the sentiment scores across geographical locations in New York City by getting the mean sentiment score, to achieve tweet sentiment scores for each individual PUMA.
-![Flickr](flickr.png)
-![Flickr](flickr.png)
+![tweet_exmpl](exampleTweet.png)
+![tweet](tweetsentiment.png)
+
 
 ## Flickr Face Dataset 
 We next utilized the Flickr API to collect a collection of datasets of Flickr images contained within each of the PUMA. Initially, we extracted the centroid points for each PUMA and then used them as geo-coordinates for collection of geotagged images from Flickr API. Images within 5km radius from these PUMA centroids were assigned to that PUMA. For each PUMA we collected 1000 Flickr images. We then used an open source Dlib face detector to select the images that contained at least one face. This allowed us to create a dataset of faces for each PUMA.
@@ -17,9 +18,7 @@ Microsoft provides a cloud-based computer vision service called Face API. It fir
 - Neutral: Neutral, Surprise
 - Negative: Contempt, Disgust, Anger, Fear, Sadness
 This score ranged from -1 to 1 with -1 being extremely negative and 1 being most positive emotion. 0 would mean a neutral emotion. Finally, we aggregated our measures at PUMA level and visualized the results. An example of the emotion classification is as follows:
-
-![tweet](tweetsentiment.png)
-
+![flickr](flickr.png)
 
 ## Relation between Tweet and Flickr Sentiments
 We investigated the PUMA-wise scores for any possible relationship between the sentiments observed in tweets and flickr images for same PUMAs. We then used the pearson’s correlation test to measure if there is any linear correlation between the polarity scores computed for both datasets. We found a very weak correlation of 0.119, but the P-value of 0.3 renders this result statistically insignificant. Thus, we did not find any conclusive evidence that similar emotions are exhibited on these platforms for similar regions. We would also like to note that given out dataset size and limited time of span for which we collected data, our results might not be representative of the broader and more stable trends. Additionally, there may be one significant event happening within one or more PUMAs, skewing the dataset with bias. 
@@ -28,12 +27,14 @@ We investigated the PUMA-wise scores for any possible relationship between the s
 We measure Global Moran’s I to calculate the spatial autocorrelation. Global Moran’s I calculates correlation between a single variable and its spatial lag. It is an indicator of global trend. Values range from -1 to +1, with positive values indicating clustering of similar values, negative values indicating dispersed trend where closer areas have different values, while 0 indicates randomness and an absence of spatial trend. For calculating, we built a Queens contiguity matrix from the PUMA shapefile. It is a simple contiguity matrix of 1-0, if two geographies touch each other it is 1 otherwise 0. Distance based matrices are better but we limit ourselves to a Queens matrix for simplicity.
 
 Tweet Sentiment shows a Moran’s I of 0.157 which shows slight clustering of similar emotions in nearby areas. With a p-value of 0.027 the result gained is deemed to be statistically significant. Some trend is also visible from the spatial lag plot shown below. The slope of the red line indicates the global moran’s I.
-![tweet](tweetsentiment.png)
+![tweetlag](twitterLag.png)
 
 Flickr Sentiment shows a stronger Moran’s I of 0.349, which shows a relatively stronger  clustering of similar emotions in nearby areas. With a p-value of 0.001, the result gained is deemed to be statistically significant. The spatial lag plot below shows a clearer trend. So sentiment exhibited by Flickr images has a stronger spatial autocorrelation than sentiments in tweets.
+![flickrLag](flickrLag.png)
 
 ## Team
 Urwa Muaz, Rachel Sim, Kloe Ng
+[full report](https://github.com/muaz-urwa/Emotional-Geography-using-Computer-Vision-and-NLP/blob/master/Emotional%20Geography%20of%20Newyork.pdf)
 
 #### Dependencies:
 
